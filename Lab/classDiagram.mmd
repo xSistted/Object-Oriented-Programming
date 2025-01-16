@@ -1,0 +1,62 @@
+classDiagram
+
+Bank o-- User
+Bank o-- ATMMachine
+User o-- Account
+Account <--> ATMCard
+Account --> Transaction
+
+    class Bank{
+        -str name
+        -user: User[]
+        -atmMachine: ATMMachine[]
+        +addUser(User)
+        +addATMMachine(ATMMachine)
+        +get_atm()
+        +get_user()
+    }
+    class User{
+        -int citizen_id
+        -str name
+        -account: Account[]
+        +addAccount(Account)
+        +get_account()
+    }
+    class Account{
+        -int max_withdraw_per_day = 40000
+        -int account_id
+        -owner: User
+        -int balance
+        -card : ATMCard
+        -history: Transaction[]
+        +createCard(ATMCard)
+        +isMaxWithdraw()
+        +deposit()
+        +withdraw()
+        +update_balance()
+        +pay_fee()
+        +get_transaction()
+        +get_balance()
+    }
+    class ATMCard{
+        fee_per_year = 150
+        -card_account: Account
+        -str card_id
+        -str pin
+    }
+    class ATMMachine{
+        -str machine_id
+        -float machine_balance
+        +update_machine_balance()
+        +insert_card()
+        +deposit()
+        +withdraw()
+        +transfer()
+    }
+    class Transaction{
+        -int machine_id
+        -int amount
+        -str type
+        -str account_id
+    }
+
