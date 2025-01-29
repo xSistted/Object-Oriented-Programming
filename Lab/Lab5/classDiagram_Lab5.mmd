@@ -1,0 +1,108 @@
+classDiagram
+
+Bank o-- User
+User o-- Account
+Account --> Card
+Account <|-- SavingAccount
+Account <|-- FixedAccount
+Account <|-- CurrentAccount
+Card <|-- ATMCard
+Card <|-- DebitCard
+DebitCard <|-- TravelCard
+DebitCard <|-- ShoppingCard
+Account o-- Transaction
+Bank o-- ATMMachine
+Bank o-- EDCMachine
+TransactionChannel <|-- ATMMachine
+TransactionChannel <|-- EDCMachine
+TransactionChannel <|-- Counter
+TransactionChannel --> Bank
+
+    class Bank{
+        -bank_name: str
+        -user_list: List<User>
+        -atm_machine_list: List<ATMMachine>
+        -edc_machine_list: List<EDC>
+        +add_user()
+        +add_atm_mahine()
+        +add_edc_machine()
+    }
+
+    class User{
+        -name: str
+        -id: str
+        -account: List<Account>
+        +add_account()
+    }
+
+    class Account{
+        -account_id: str
+        -balance: double
+        -owner: User
+        -card: Card
+        +add_card()
+    }
+    class SavingAccount{
+        -withdraw_capacity: 50_000
+        -interest: 0.005
+    }
+    class FixedAccount{
+        -fix_interest: 0.025
+        -deposit_date: None
+    }
+    class CurrentAccount{
+        
+    }
+
+    class Card{
+        -card_id: str
+        -pin: str
+        -account_no: str
+        +validate_pin()
+        +verify_card()
+    }
+    class ATMCard{
+        -fee_per_year: 150
+    }
+    class DebitCard{
+        -fee_per_yaer: 300
+    }
+    class TravelCard{
+        -accident_capacity: 300_000
+    }
+    class ShoppingCard{
+        -credit_recieve: 0.01
+    }
+
+    class TransactionChannel{
+        -channel_id: str
+        -bank: Bank
+    }
+    class ATMMachine{
+        -machine_id: str
+        -machine_balance: double
+        +insert_card()
+        +deposit()
+        +withdraw()
+        +trasfer()
+    }
+    class EDCMachine {
+        -edc_id: str
+        -edc_owner: User
+        +swipe_card()
+        +pay()
+    }
+    class Counter{
+        -branch_no: str
+        +verify_identity()
+        +deposit()
+        +withdraw()
+        +transfer()
+    }
+
+    class Transaction{
+        -trans_type: str
+        -trans_source: str
+        -trans_amount: double
+        -trans_current_amount: double
+    }
